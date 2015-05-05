@@ -1,0 +1,41 @@
+<apex:page controller="GoogleChartsController" sidebar="false"  id="page">
+<apex:includeScript id="chart" value="https://www.google.com/jsapi" />
+<apex:sectionHeader title="Welcome to Charting by Javascript with google" id="secheader" subtitle="by saurabh kumar"/>
+<div  id="myChart"> </div>
+
+<script type="text/javascript">
+
+google.load('visualization' , '1.0' ,{'packages' : ['corechart']});
+
+google.setOnLoadCallback(initChart);
+
+function initChart()
+{
+
+GoogleChartsController.loadOpps( function(result,event){
+
+var visualization = new google.visualization.ColumnChart(document.getElementById('myChart'));
+var tabledata = new google.visualization.DataTable();
+tabledata.addColumn('string', 'Opportunity');
+tabledata.addColumn('number', 'Expected Revenue');
+tabledata.addColumn('number', 'Amount');   
+for(var i =0; i<result.length;i++){
+var r = result[i];
+tabledata.addRow([r.Name, r.ExpectedRevenue, r.Amount]);
+}
+
+visualization.draw(tabledata, {legend : {position: 'top', textStyle: {color: 'blue', fontSize: 10}},
+width:window.innerWidth,vAxis:{textStyle:{fontSize: 10}},hAxis:{textStyle:{fontSize: 10},showTextEvery:1,slantedText:false}});
+}, {escape:true});
+}
+
+
+
+
+
+
+</script>
+
+
+
+</apex:page>
