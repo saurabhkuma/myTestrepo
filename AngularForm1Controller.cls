@@ -36,7 +36,7 @@ public with sharing class AngularForm1Controller {
 
         a = (Account)JSON.deserialize(accountJson, Account.class);
 
-        upsert a;
+        upsert a;  
 
     }
 	
